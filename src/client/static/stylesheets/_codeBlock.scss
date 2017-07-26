@@ -1,0 +1,74 @@
+@charset "utf-8";
+//*****************************************************公共代码片段*********************************************************//
+
+//嵌入超出文字禁止换行隐藏变成省略号
+%private_HiddenFullFont {
+  white-space: nowrap; /*是禁止换行；*/
+  overflow: hidden; /*多出的内容隐藏；*/
+  text-overflow: ellipsis; /*多出的内容以省略号...来表达；主要用于IE等浏览器*/
+  -o-text-overflow:ellipsis; /*支持chrome；*/
+}
+//嵌入强制换行
+%private_ClearWrap {
+  word-break:break-all; /*只对英文起作用，以字母作为换行依据；支持IE，chrome，FF不支持*/
+  word-wrap:break-word; /*只对英文起作用，以单词作为换行依据；支持IE，chrome，FF*/
+  white-space: pre-wrap; /*只对中文起作用，强制换行；*/
+}
+//嵌入禁止换行
+%private_whiteNowrap {
+  white-space: nowrap;
+}
+//嵌入字体样式--宋体
+%private_FontStyle_SimSun {
+  font-family: \5B8B\4F53;
+}
+//嵌入字体样式--微软雅黑
+%private_FontStyle_YaHei {
+  font-family: \5FAE\8F6F\96C5\9ED1;
+}
+//嵌入字体样式--Tahoma
+%private_FontStyle_Tahoma {
+  font-family: 'Tahoma';  
+}
+//嵌入字体样式--华文细黑
+%private_FontStyle_STHeiti{
+  font-family: \534E\6587\7EC6\9ED1;
+}
+\534E\6587\7EC6\9ED1
+
+//嵌入清除浮动样式
+%private_Clear_Fix{
+  height: 1%;
+  display:block;
+}
+%private_Clear_Fix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+
+//解决ie6,ie7下display:inline-block的间隙问题
+%private_Clear_DIsplyInlineBlock{
+    font-size: 0;          
+    //解决safari下display:inline-block的间隙问题
+    letter-spacing: -4px;  //根据不同字体字号或许需要做一定的调整
+    word-spacing: -4px;
+    
+    .public_DIsplyInlineBlock{
+        font-size: 12px;
+        display: inline-block;
+        *display:inline;
+        *zoom:1;
+        letter-spacing:normal;
+        word-spacing:normal;
+    }
+}
+
+
+
+
+
+
+

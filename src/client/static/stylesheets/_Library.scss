@@ -1,0 +1,751 @@
+@charset "utf-8";
+//*****************************************************公共嵌入的函数*********************************************************//
+
+//初始化所有样式函数
+@mixin initStyle(){
+  * { margin: 0px; padding: 0px;
+
+  }
+  body {  margin: 0;  }
+  h1, h2, h3, h4, h5 {  font-size: 12px;  font-weight: normal; }
+  ul {  margin: 0;  padding: 0;  list-style: none;  display: block;  }
+  li {  display: block;  }
+  i {  font-style: normal;  display: inline-block;  }
+  p {  margin: 0;  padding: 0;  display: block;  }
+  img {  border: 0px;  display: inline-block;  }
+  a { text-decoration: none; }
+  a,input {  outline: none;  border: none;  padding: 0px;  }
+  span {  display: inline-block;  }
+  table{  border-collapse:collapse;  border: 0px;  }
+  button{outline: none; border: 0px;}
+}
+
+//************************************************************
+//    @转换rem函数，并且保留小数点位数
+//************************************************************/
+@function pxChangeRemForFont($parameter,$index) {
+
+  $number:$parameter / 64;
+  $string:'';
+  @if($number > 0 && $number<1){
+    $string: str-slice(($number+"") , 1, $index);
+  }@else{
+    $string: $number;
+  }
+  @return unquote($string)+'rem';
+
+}
+
+//************************************************************
+//    @除以2函数
+//************************************************************/
+@function pxChangeRem($parameter) {
+  @return ($parameter/64)+rem;
+}
+
+//************************************************************
+//    @调用动画函数;
+//     参数1为动画的名字;
+//     参数2为动画的时间，以秒作为单位;
+//     参数3为缓冲动画值，具体可参考w3c中的animate有什么缓冲动画值(如:ease-in);
+//************************************************************/
+@mixin  getAnimate($animateName,$time,$swing){
+    -webkit-animation:#{$animateName} #{$time}s #{$swing};
+   -moz-animation:#{$animateName} #{$time}s #{$swing};
+    -o-animation:#{$animateName} #{$time}s #{$swing};
+    -ms-animation:#{$animateName} #{$time}s #{$swing};
+    animation:#{$animateName} #{$time}s #{$swing};
+}
+
+//************************************************************
+//    @设置动画函数;
+//    参数1为动画的名字;
+//    参数2为默认的样式状态，此为一个list集合;
+//    参数3为改变后的样式状态，此为一个list集合;
+//    使用例子: @include setAnimate("myAnimate",(opacity: 0),(opacity:1));
+//************************************************************/
+@mixin  setAnimate($animateName,$defaultState,$changeState){
+
+  @-webkit-keyframes #{$animateName}{
+       0%{
+            @each $default_styleName, $default_styleContent in $defaultState{
+                  #{$default_styleName} : $default_styleContent;
+            }
+       }
+       100%{
+             @each $change_styleName, $change_styleContent in $changeState{
+               #{$change_styleName} : $change_styleContent;
+             }
+       }
+  }
+  @-moz-keyframes #{$animateName}{
+        0%{
+          @each $default_styleName, $default_styleContent in $defaultState{
+            #{$default_styleName} : $default_styleContent;
+          }
+        }
+        100%{
+          @each $change_styleName, $change_styleContent in $changeState{
+            #{$change_styleName} : $change_styleContent;
+          }
+        }
+  }
+  @-o-keyframes #{$animateName}{
+        0%{
+          @each $default_styleName, $default_styleContent in $defaultState{
+            #{$default_styleName} : $default_styleContent;
+          }
+        }
+        100%{
+          @each $change_styleName, $change_styleContent in $changeState{
+            #{$change_styleName} : $change_styleContent;
+          }
+        }
+  }
+  @-ms-keyframes #{$animateName}{
+        0%{
+          @each $default_styleName, $default_styleContent in $defaultState{
+            #{$default_styleName} : $default_styleContent;
+          }
+        }
+        100%{
+          @each $change_styleName, $change_styleContent in $changeState{
+            #{$change_styleName} : $change_styleContent;
+          }
+        }
+  }
+  @keyframes #{$animateName}{
+        0%{
+          @each $default_styleName, $default_styleContent in $defaultState{
+            #{$default_styleName} : $default_styleContent;
+          }
+        }
+        100%{
+          @each $change_styleName, $change_styleContent in $changeState{
+            #{$change_styleName} : $change_styleContent;
+          }
+        }
+   }
+}
+
+//************************************************************
+//    @input中placeholder添加颜色;
+//************************************************************/
+@mixin placeHolderColor($color) {
+
+  &::-webkit-input-placeholder { /* WebKit browsers */
+    color: $color;
+  }
+  &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: $color;
+  }
+  &::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: $color;
+  }
+  &:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: $color;
+  }
+}
+
+//************************************************************
+//    @弹性布局初始化
+//************************************************************/
+@mixin  flexBoxInit(){
+  //旧版声明
+  display:-webkit-box;
+  display:-o-box;
+  display:-moz-box;
+  display:-ms-box;
+  display:box;
+  //过渡班声明
+  display:-webkit-flexbox;
+  display:-o-flexbox;
+  display:-moz-flexbox;
+  display:-ms-flexbox;
+  display:flexbox;
+  //新版声明
+  display:-webkit-flex;
+  display:-o-flex;
+  display:-moz-flex;
+  display:-ms-flex;
+  display:flex;
+}
+
+//************************************************************
+//    @弹性布局的流动方向--可分垂直流动和左右流动
+//    参数为1时候是左右流动;
+//    参数为2时候是垂直流动;
+//************************************************************/
+@mixin flexBoxOrient($parameter){
+
+  @if($parameter==1){
+
+    -webkit-box-orient:horizontal;
+    -o-box-orient:horizontal;
+    -moz-box-orient:horizontal;
+    -ms-box-orient:horizontal;
+    box-orient:horizontal;
+
+    -webkit-flex-direction: row;
+    -o-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+
+  }@else if($parameter==2){
+
+    -webkit-box-orient:vertical;
+    -o-box-orient:vertical;
+    -moz-box-orient:vertical;
+    -ms-box-orient:vertical;
+    box-orient:vertical;
+
+    -webkit-flex-direction: column;
+    -o-flex-direction: column;
+    -moz-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+
+  }
+}
+
+//************************************************************
+//    @弹性布局的流动顺序(注意,这个低版本支持不太好)
+//    参数为1时候是正常顺序;
+//    参数为2时候是逆向顺序;
+//************************************************************/
+@mixin flexBoxDirection($parameter){
+
+  @if($parameter==1){
+
+    -webkit-box-direction: normal;
+    -o-box-direction: normal;
+    -moz-box-direction: normal;
+    -ms-box-direction: normal;
+    box-direction: normal;
+
+
+  }@else if($parameter==2){
+
+    -webkit-box-direction: reverse;
+    -o-box-direction: reverse;
+    -moz-box-direction: reverse;
+    -ms-box-direction: reverse;
+    box-direction: reverse;
+
+  }
+}
+
+//************************************************************
+//    @弹性布局的伸缩分布(注意,设置这个的时候必须有一个固定的宽度)
+//    参数为left向左边靠;
+//    参数为right向右边靠;
+//    参数为center向中间靠;
+//    参数为justify平均分布;
+//************************************************************/
+@mixin flexBoxPack($parameter){
+
+  @if($parameter=='left'){
+
+    -webkit-box-pack: start;
+    -o-box-pack: start;
+    -moz-box-pack: start;
+    -ms-box-pack: start;
+    box-pack: start;
+
+    -webkit-flex-pack:start;
+    -o-flex-pack:start;
+    -moz-flex-pack:start;
+    -ms-flex-pack:start;
+    flex-pack:start;
+
+    -webkit-justify-content: flex-start;
+    -o-justify-content: flex-start;
+    -moz-justify-content: flex-start;
+    -ms-justify-content: flex-start;
+    justify-content: flex-start;
+
+  }@else if($parameter=='right'){
+
+    -webkit-box-pack: end;
+    -o-box-pack: end;
+    -moz-box-pack: end;
+    -ms-box-pack: end;
+    box-pack: end;
+
+    -webkit-flex-pack:end;
+    -o-flex-pack:end;
+    -moz-flex-pack:end;
+    -ms-flex-pack:end;
+    flex-pack:end;
+
+    -webkit-justify-content: flex-end;
+    -o-justify-content:flex-end;
+    -moz-justify-content:flex-end;
+    -ms-justify-content: flex-end;
+    justify-content: flex-end;
+
+  }@else if($parameter=='center'){
+
+    -webkit-box-pack:center;
+    -o-box-pack: center;
+    -moz-box-pack: center;
+    -ms-box-pack: center;
+    box-pack: center;
+
+    -webkit-flex-pack:center;
+    -o-flex-pack:center;
+    -moz-flex-pack:center;
+    -ms-flex-pack:center;
+    flex-pack:center;
+
+    -webkit-justify-content: center;
+    -o-justify-content:center;
+    -moz-justify-content:center;
+    -ms-justify-content: center;
+    justify-content: center;
+
+  }@else if($parameter=='justify'){
+
+    -webkit-box-pack:justify;
+    -o-box-pack: justify;
+    -moz-box-pack: justify;
+    -ms-box-pack: justify;
+    box-pack: justify;
+
+    -webkit-flex-pack:justify;
+    -o-flex-pack:justify;
+    -moz-flex-pack:justify;
+    -ms-flex-pack:justify;
+    flex-pack:justify;
+
+    -webkit-justify-content: space-between;
+    -o-justify-content:space-between;
+    -moz-justify-content:space-between;
+    -ms-justify-content: space-between;
+    justify-content: space-between;
+  }
+}
+
+//************************************************************
+//    @弹性布局的处理额为多余的空间
+//    参数为left向左边靠;
+//    参数为right向右边靠;
+//    参数为center向中间靠;
+//    参数为justify平均分布;
+//************************************************************/
+@mixin floxBoxAlign($parameter){
+
+  @if($parameter=='normal'){
+
+    -webkit-box-align: stretch;
+    -o-box-align: stretch;
+    -moz-box-align: stretch;
+    -ms-box-align: stretch;
+    box-align: stretch;
+
+    -webkit-flex-align:stretch;
+    -o-flex-align:stretch;
+    -moz-flex-align:stretch;
+    -ms-flex-align:stretch;
+    flex-align:stretch;
+
+    -webkit-align-items: stretch;
+    -o-align-items: stretch;
+    -moz-align-items: stretch;
+    -ms-align-items: stretch;
+    align-items: stretch;
+
+  }@else if($parameter=='top'){
+
+    -webkit-box-align: end;
+    -o-box-align: end;
+    -moz-box-align: end;
+    -ms-box-align: end;
+    box-align: end;
+
+    -webkit-flex-align:end;
+    -o-flex-align:end;
+    -moz-flex-align:end;
+    -ms-flex-align:end;
+    flex-align:end;
+
+    -webkit-align-items: flex-end;
+    -o-align-items: flex-end;
+    -moz-align-items: flex-end;
+    -ms-align-items: flex-end;
+    align-items: flex-end;
+
+  }@else if($parameter=='bottom'){
+
+    -webkit-box-align: start;
+    -o-box-align: start;
+    -moz-box-align: start;
+    -ms-box-align: start;
+    box-align: start;
+
+    -webkit-flex-align:start;
+    -o-flex-align:start;
+    -moz-flex-align:start;
+    -ms-flex-align:start;
+    flex-align:start;
+
+    -webkit-align-items: flex-start;
+    -o-align-items: flex-start;
+    -moz-align-items: flex-start;
+    -ms-align-items: flex-start;
+    align-items: flex-start;
+
+  }@else if($parameter=='center'){
+
+    -webkit-box-align: center;
+    -o-box-align: center;
+    -moz-box-align: center;
+    -ms-box-align: center;
+    box-align: center;
+
+    -webkit-flex-align:center;
+    -o-flex-align:center;
+    -moz-flex-align:center;
+    -ms-flex-align:center;
+    flex-align:center;
+
+    -webkit-align-items: center;
+    -o-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    align-items: center;
+
+  }@else if($parameter=='baseline'){
+
+    -webkit-box-align: baseline;
+    -o-box-align: baseline;
+    -moz-box-align: baseline;
+    -ms-box-align: baseline;
+    box-align: baseline;
+
+    -webkit-flex-align:baseline;
+    -o-flex-align:baseline;
+    -moz-flex-align:baseline;
+    -ms-flex-align:baseline;
+    flex-align:baseline;
+
+    -webkit-align-items: baseline;
+    -o-align-items: baseline;
+    -moz-align-items: baseline;
+    -ms-align-items: baseline;
+    align-items: baseline;
+  }
+}
+
+//************************************************************
+//    @弹性布局的设置子节点所占的比例;
+//    是一个浮点数,1为所占100%,2为所占200%;
+//************************************************************/
+@mixin flexBoxProportion($parameter){
+  -webkit-box-flex: $parameter;
+  -o-box-flex: $parameter;
+  -moz-box-flex: $parameter;
+  -ms-box-flex: $parameter;
+  box-flex: $parameter;
+
+  -wekit-flex:$parameter;
+  -o-flex:$parameter;
+  -moz-flex:$parameter;
+  -ms-flex:$parameter;
+  flex:$parameter;
+}
+
+//************************************************************
+//    @弹性布局的设置子节点的显示位置;
+//************************************************************/
+@mixin flexBoxPosition($parameter){
+
+  -webkit-box-ordinal-group: $parameter;
+  -o-box-ordinal-group: $parameter;
+  -moz-box-ordinal-group: $parameter;
+  -ms-box-ordinal-group: $parameter;
+  box-ordinal-group: $parameter;
+
+  -webkit-flex-order:$parameter;
+  -o-flex-order:$parameter;
+  -moz-flex-order:$parameter;
+  -ms-flex-order:$parameter;
+  flex-order:$parameter;
+
+  -webkit-order: $parameter;
+  -o-order: $parameter;
+  -moz-order: $parameter;
+  -ms-order: $parameter;
+  order: $parameter;
+}
+
+//************************************************************
+//    @多行文本溢出隐藏
+//    参数1:多少行开始隐藏文字;
+//
+//************************************************************/
+@mixin multiLineTextHidden($num){
+    word-break:break-all;
+    display:-webkit-box;
+    display:-o-box;
+    display:-moz-box;
+    display:box;
+    -webkit-line-clamp:$num;
+    -moz-line-clamp:$num;
+    -o-line-clamp:$num;
+    -webkit-box-orient:vertical;
+    -moz-box-orient:vertical;
+    -o-box-orient:vertical;
+    overflow:hidden;
+}
+
+//************************************************************
+//    @透明度
+//      参数1:透明度的值，0为最小，100为最大;
+//      
+//************************************************************/
+@mixin createOpacity($num){
+    filter:alpha(opacity=$num);  
+    -moz-opacity:($num/100);  
+    -khtml-opacity: ($num/100);  
+    opacity: ($num/100); 
+}
+
+//************************************************************
+//    @添加箭头样式
+//      参数1:箭头样式的名字;
+//      参数2:箭头的大小;
+//      参数3:箭头的颜色;
+//      参数3:箭头的方向;
+//************************************************************/
+@mixin createJt($name,$size,$color,$direction){
+   
+        %#{$name}_#{$direction}{
+            width: 0px;
+            height: 0px;
+            display: block;
+            font-size: 0px;
+            line-height: 0px;
+            position: absolute;
+
+            @if($direction=="top"){
+                border-top: none;
+                border-bottom: $size+px solid $color;
+                border-left: $size+px solid transparent;
+                border-right: $size+px solid transparent;
+                
+            }@else if($direction=="bottom"){
+                border-top: $size+px solid $color;
+                border-bottom: none;
+                border-left: $size+px solid transparent;
+                border-right: $size+px solid transparent;
+                
+            }@else if($direction=="left"){
+                border-top: $size+px solid transparent;
+                border-bottom: $size+px solid transparent;
+                border-left:none;
+                border-right: $size+px solid $color;
+            }@else if($direction=="right"){
+                border-top: $size+px solid transparent;
+                border-bottom: $size+px solid transparent;
+                border-left: $size+px solid $color;
+                border-right: none;
+            }  
+            
+        } 
+        .#{$name}_#{$direction}{
+            @extend %#{$name}_#{$direction};
+        }    
+}
+
+
+
+//************************************************************
+//    @设置字体可缩放,注意,使用这个的时候,必须在html这个标签上加上font-size:62.5%这个样式;
+//      
+//************************************************************/
+@mixin autoFontSize($size){
+    font-size: $size+px;
+    font-size: ($size/10)+rem;
+}
+
+
+//************************************************************
+//    @超级高,可以上线居中行距
+//      参数1:高度的值，行高的值;
+//      
+//************************************************************/
+@mixin sHeight($height){
+    height: $height+px;
+    line-height: $height+px;
+}
+
+
+//************************************************************
+//    @嵌入字体链接样式
+//      参数1:还没被划过时候的a标签的颜色;
+//      参数2:划过后a标签的颜色;
+//************************************************************/
+@mixin linkStyle($color, $hoverColor, $isHaveUnderlined) {
+  color: $color;
+  text-decoration: none;
+
+  &:hover {
+    color: $hoverColor;
+
+    @if ($isHaveUnderlined==true) {
+      text-decoration: underline;
+    } @else {
+      text-decoration: none;
+    }
+  }
+}
+
+//************************************************************
+//    @继承样式
+//      参数1:继承者,该参数为list类型;
+//      参数2:被继承者,该参数为list类型;
+//************************************************************/
+@mixin successor($inHeritance,$beInherited){
+
+  @each $beInherited-obj in $beInherited{
+    .#{$beInherited-obj}{
+      @each $inHeritance-obj in $inHeritance {
+        @extend %#{$inHeritance-obj};
+      }
+    }
+  }
+}
+
+//************************************************************
+//    @嵌入字体链接样式
+//      参数1:为未移过时候字体颜色;
+//      参数2:移过时字体的颜色;
+//      参数3:为是否加下划线;
+//************************************************************/
+@mixin linkStyle($color,$hoverColor,$isHaveUnderlined){
+  color:$color;
+  text-decoration: none;
+
+  &:hover{
+    color: $hoverColor;
+
+    @if($isHaveUnderlined==true){
+      text-decoration: underline;
+    }@else{
+      text-decoration: none;
+    }
+  }
+}
+
+//************************************************************
+//    @插入图片样式
+//      参数1:为图片的名字;
+//      参数2:位图片的类型;
+//      参数3:为是否平铺;
+//      参数4:为图片的x轴和者y轴;
+//      参数5:位被继承者，也就是那个class使用这个图片就填写那个class
+//************************************************************/
+@mixin insertImage($imageName,$imageType,$repeatType,$list,$successor){
+
+  $type:"";
+  $repeat:"";
+
+  @if($imageType == 1){
+    $type:".jpg";
+  }@else if($imageType == 2){
+    $type:".gif";
+  }@else if($imageType == 3){ 
+    $type:".png";
+  }
+
+  @if($repeatType=="no"){
+    $repeat:no-repeat;
+  }@else if($repeatType=="x"){
+    $repeat:repeat-x;
+  }@else if($repeatType=="y"){
+    $repeat:repeat-y;
+  }
+
+  %#{$successor}{
+    background-image:url("../images/" + $imageName +""+ $type);
+    background-position: nth($list,1) nth($list,2);
+    background-repeat: $repeat;
+
+  }
+}
+
+
+//************************************************************
+//    @自定义栅格网格系统
+//      参数1:为网格的样式class名;
+//      参数2:为网格总共有多少列;
+//      参数3:为网格的长宽，该参数为一个list类型;
+//      参数4:为子网格的属性，子网格参数1为子网格的索引，参数2为子网格的宽，参数3为子网格的高度，该参数是一个多维的list类型;
+//      使用方法例子：@include grid_layout_forPc("tm",1,(1000,400),((1,200,50),(2,300,50),(3,400,50)));
+//************************************************************
+@mixin grid_layout_forPc($rowName,$rowNum,$thisList,$list){
+
+  $rowWidth:nth($thisList,1);
+  $rowHeight:nth($thisList,2);
+  $isNull:"false";
+
+  .#{$rowName}-row-#{$rowNum}:after{
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  } 
+
+  .#{$rowName}-row-#{$rowNum}{                      //row-XX 容器，注意XX也是约定
+    width: $rowWidth+px;
+    display:block;
+    @if($rowHeight==auto){
+        height: 1%;
+    }@else{
+        height:$rowHeight+px;
+    }
+      
+    @each $num, $width,$height in $list {   //假如只有一个col的时候，$width会显示null;
+          @if($width==null){
+              $isNull:"true";
+          }
+    }
+    
+    @if($isNull=="true"){
+        .#{$rowName}-col-#{nth($list,1)}{
+          width: nth($list,2)+px;
+          _dispaly:inline;
+          @if(nth($list,3)==auto){
+              height: auto;
+          }@else{
+              height: nth($list,3)+px;
+          }
+        }  
+    }@else{
+        @each $num, $width,$height in $list {
+          $rowWidth: $rowWidth - $width;    //计算总长度减去所有列数的宽度*/
+        }
+        $rowWidth : $rowWidth  /  (length($list)-1);      //把减出来的剩下的平均分配给margin-left值（注意第一个除外）
+        @each $num, $width, $height in $list{             //动态的拿取$list数组中的值,并把对应的值付给对应的子div的width*
+         .#{$rowName}-col-#{$num}{
+           width: $width+px;
+           height: $height+px;
+           float: left;
+           _dispaly:inline;
+
+           @if($num != 1){                               //第一个并不需要赋margin-left值;
+             @if($rowWidth < 0){
+              margin-left:0 + px;
+             }@else{
+              margin-left:round($rowWidth) + px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

@@ -1,0 +1,417 @@
+@charset "utf-8";
+
+/*****************************************登录界面样式*****************************************/
+.game_loginBackground{
+   width: 100%;
+   height: 100%;
+   position: fixed;
+   left: 0px;
+   top: 0px;
+   z-index: 0;
+   background: url("../images/game_loginBackground.jpg") no-repeat;
+   background-size: 100%;
+   overflow: hidden;
+}
+
+.game_lady{
+   width: 100%;
+   position: fixed;
+   bottom: -10%;
+   left: 50%;
+   margin-left: -50%;
+   z-index: 1;
+}
+
+.game_lady img{
+   width: 100%;
+   display: block;
+}
+
+.game_loginForm{
+  width: (686/1920)*90%;
+  background-size: 100%;
+  position: absolute;
+  left: 10%;
+  top: 50%;
+  margin-top: -15%;
+  z-index: 2;
+}
+
+.game_loginFormTitle{
+  width: (400/686)*100%;
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: -10%;
+  margin-left: (-400/686/2)*100%;
+}
+
+.game_loginUsername{
+  width: (530/686)*100%;
+  height: (75/650)*100%;
+  background-color: #fff;
+  position: absolute;
+  left: 50%;
+  top: (220/650)*100%;
+  border-radius: pxChangeRem(10);
+  margin-left: (-530/686/2)*100%;
+  border: pxChangeRem(2) solid #610a5d;
+  padding: 1% 2%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.game_loginPassWord{
+  @extend .game_loginUsername;
+  top: (325/650)*100%;
+}
+
+.game_loginUsername_input{
+  width: 100%;
+  height: 100%;
+  line-height: 100%;
+  display: block;
+  border: 0rem;
+  outline: none;
+  font-size: pxChangeRem(24);
+}
+
+.game_loginButtons{
+   @extend %private_Clear_Fix;
+   width: (530/686)*100%;
+   height: (90/650)*100%;
+   position: absolute;
+   left: 50%;
+   top: (435/650)*100%;
+  margin-left: (-530/686/2)*100%;
+}
+
+.game_loginButtons_login{
+  width: (247/530)*100%;
+  height: 100%;
+  float: left;
+  background: url("../images/game_loginBtn.png") no-repeat left center;
+  cursor: pointer;
+  background-size: auto 100%;
+}
+
+.game_loginButtons_login:hover, .game_loginButtons_login:active{
+  background: url("../images/game_loginBtn_hover.png") no-repeat left center;
+  background-size: auto 100%;
+}
+
+.game_loginButtons_register{
+  width: (247/530)*100%;
+  height: 100%;
+  float: right;
+  background: url("../images/game_registerBtn.png") no-repeat right center;
+  cursor: pointer;
+  background-size: auto 100%;
+}
+
+.game_loginButtons_register:hover, game_loginButtons_register:active{
+  background: url("../images/game_registerBtn_hover.png") no-repeat right center;
+  background-size: auto 100%;
+}
+
+.game_loginFormBackground{
+  width: 100%;
+  display: block;
+}
+.game_loginRectangle{
+
+}
+
+/*****************************************选择房间样式*****************************************/
+.web_roomBg{
+  width: 100%;
+  height: 100%;
+  background: url("../images/game_bg.png");
+}
+
+.web_gameTitle{
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 65px;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #011f29), color-stop(1, #011f29)); /* Saf4+, Chrome */
+  border-bottom: 1px solid #4a904d;
+}
+
+.web_gameTitle i{
+  background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#feffda), to(#ffcc2b));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+.web_roomBlock{
+  width: 100%;
+  height: 100%;
+}
+
+.web_roomBlock ul{
+  width: 100%;
+  clear: both;
+  overflow: hidden;
+  list-style: none;
+  margin: 0px;
+  padding: 0;
+}
+
+.web_room{
+  width: 33.3%;
+  float: left;
+  position: relative;
+  text-align: center;
+  padding-top: 150px;
+  padding-bottom: 150px;
+  background: url("../images/game_dragon.png") no-repeat center;
+  background-size: 70%;
+}
+
+@media screen and (max-width: 1366px) {
+  .web_room{
+    width: 50%;
+  }
+}
+
+.web_room_con{
+  width: 263px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.web_brandBlock{
+  width: 162px;
+  height: 50px;
+  background: url("../images/game_brand.png");
+  position: absolute;
+  left: 50%;
+  top: 18px;
+  margin-left: -81px;
+}
+
+.web_room_number{
+  width: 158px;
+  height: 35px;
+  border-radius: 60px;
+  background-color: #135834;
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  margin-left: -79px;
+}
+
+.web_room_number i{
+  font-size: 24px;
+  height: 35px;
+  line-height: 35px;
+  display: block;
+  font-weight: bold;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow:0px 0px 0px #ffe96f,
+  1.5px -1.5px 1px #000,
+  1.5px -1.5px 1px #000,
+  -1.5px -1.5px 1px #000,
+  -1.5px 1.5px 1px #000;
+}
+
+.web_room img{
+  width: 263px;
+}
+
+.web_room_player{
+  width: 100%;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+
+.web_room_player .room_player1{
+  width: 83px;
+  height: auto;
+  border-radius: 6px;
+  position: absolute;
+  left: -93px;
+  top: 23px;
+}
+
+.web_room_player .room_player2{
+  width: 83px;
+  height: auto;
+  border-radius: 6px;
+  position: absolute;
+  right: -93px;
+  top: 23px;
+}
+
+.web_room_player .room_player3{
+  width: 83px;
+  height: auto;
+  border-radius: 6px;
+  position: absolute;
+  left: 50%;
+  top: -116px;
+  margin-left: -41.5px;
+}
+
+.web_room_player .room_noPlayer{
+  width: 82px;
+  height: 82px;
+  display: block;
+  background: url("../images/game_noPlayer.png") no-repeat;
+  cursor: pointer;
+}
+
+.web_room_player .room_noPlayer:hover{
+  background: url("../images/game_noPlayer_hover.png") no-repeat;
+}
+
+.web_room_player .room_Player{
+  width: 82px;
+  display: block;
+}
+
+.web_room_player .room_Player  .room_PlayerHeader{
+  width: 82px;
+  height: 82px;
+  display: block;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #f7d878;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.web_room_player .room_Player img{
+  width: 80px;
+  height: 80px;
+  display: block;
+  border-radius: 10px;
+}
+
+.web_room_player .room_Player .room_PlayerName{
+  text-align: center;
+  font-size: 14px;
+  color: #fff;
+  width: 82px;
+  padding: 6px 0;
+  display: block;
+  font-style: normal;
+}
+
+
+/*****************************************游戏房间样式*****************************************/
+.webBody{
+  width: 90%;
+  margin: 0 auto;
+}
+
+button{
+  width: auto;
+  background-color: cornflowerblue;
+  border-radius: 3px;
+  text-align: center;
+  color: #fff;
+  padding: 3px 10px;
+  cursor: pointer;
+  outline: none;
+  border: 0px;
+}
+
+button:hover{
+  background-color: midnightblue;
+}
+
+#login{
+  margin-top: 20px;
+}
+
+#username{
+  width: 30%;
+  height: 23px;
+  border: 1px solid #dedede;
+  border-radius: 3px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  color: #666;
+}
+
+#sendContent{
+  display: none;
+}
+
+#content{
+  width:100%;
+  border: 1px solid #dedede;
+  height: 500px;
+  margin-top: 20px;
+  display: block;
+  box-sizing: border-box;
+  background-color: aliceblue;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+  overflow-y:auto;
+}
+
+#content .li{
+  width: 100%;
+  display: block;
+  clear: both;
+  overflow: hidden;
+}
+
+#content .li span{
+  width: 100%;
+  display: block;
+}
+
+#content .li span.usename{
+  padding: 2px 5px;
+  color: #666;
+  width: auto;
+  display: block;
+  text-align: left;
+}
+
+#content .li span.usercons{
+  display: block;
+  width: auto;
+  min-width: 5%;
+  max-width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: skyblue;
+  margin-top: 5px;
+  border-radius: 4px;
+  float: left;
+  text-align: left;
+}
+
+#content .me span.usename{
+  text-align: right;
+}
+
+#content .me span.usercons{
+  text-align: right;
+  float: right;
+  background-color: lightgreen;
+}
+
+#textarea{
+  width: 100%;
+  height: 80px;
+  border: 1px solid #dedede;
+  display: block;
+  box-sizing: border-box;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  color: #666;
+  border-radius: 3px;
+}
